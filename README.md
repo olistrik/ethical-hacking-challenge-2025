@@ -1,11 +1,11 @@
 # Description
 
-This challenge is based on a real issue that I (Oli) had at work, and is quite
+This challenge is based on a real issue that I ([Oli](https://github.com/olistrik)) had at work, and is quite
 a common misconfiguration with GraphQL. The crux of the issue can really be divided
 into two main learning points:
 
 ## Private APIs should never disclose more information than absolutely necessary.
-   
+
 In the case of GraphQL, it often comes with Introspection, generated online
 documentation, and in many cases an in-browser live editor that can be used to
 interactively create and execute queries against the server. This isn't only
@@ -15,7 +15,7 @@ SwaggerDocs also have interactive queries.
 For developers, these kinds of tools are very helpful. Especially in the case
 of GraphQL as many libraries and frameworks built around it automatically
 generate clients from the Introspection routes. It can also be a very useful tool
-for hackers however as it'll likely expose every single capability of your API.
+for hackers however, as it'll likely expose every single capability of your API.
 
 ## Dynamic API request builders like GraphQL can do much more than you expect.
 
@@ -23,13 +23,13 @@ GraphQL allows clients to effectively define their own API, only requesting the
 information that they require. When done "properly" this usually means that the
 GraphQL API becomes a thin layer between a client and the database. There are even
 libraries that allow you to generate your GraphQL server _from_ your database
-schema, and these often create very "smart" APIs which allow the client to
+schema (such as [Prisma](https://prisma.io) and [Ent](https://entgo.io)), and these often create very "smart" APIs which allow the client to
 construct joins across relations in the database.
 
 The problem is, exactly which layer of your application these joins get
 applied can be very difficult to determine. In the actual exploit from my work
 we were applying authentication and field masking on the top level GraphQL
-queries and mutations. This worked fine with the way we used the API, but
+queries and mutations. This worked fine with the way _we_ used the API, but
 because our generator also allowed constructing complex nested joins it was
 possible to construct queries that would traverse the database _without any
 authentication at all_.
